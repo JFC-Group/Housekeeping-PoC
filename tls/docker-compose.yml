@@ -1,0 +1,44 @@
+# GenieACS (open-source TR-069/CWMP ACS).
+#   cwmp (CPE-facing)  : host 7547
+#   nbi  (REST API)    : host 7557
+#   fs   (file server) : host 7567
+#   ui   (web UI)      : host 3000   (login admin/admin)
+services:
+  mongo:
+    image: mongo:8.0
+    container_name: genieacs-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    networks: [acs]
+
+  genieacs:
+    image: drumsergio/genieacs:1.2.13.2
+    container_name: genieacs
+    restart: unless-stopped
+    depends_on: [mongo]
+    environment:
+      GENIEACS_MONGODB_CONNECTION_URL: "mongodb://mongo:27017/genieacs"
+      # 128-bit hex secret for signing UI JWTs (local/dev only)
+      GENIEACS_UI_JWT_SECRET: "0f6a3c2b9e1d4f7a8c5b2e9d1f4a7c3e"
+      # listen on all interfaces inside the container
+      GENIEACS_CWMP_INTERFACE: "0.0.0.0"
+      GENIEACS_NBI_INTERFACE: "0.0.0.0"
+      GENIEACS_FS_INTERFACE: "0.0.0.0"
+      GENIEACS_UI_INTERFACE: "0.0.0.0"
+      # log to stdout/stderr so `docker logs` / supervisor captures them
+      GENIEACS_CWMP_ACCESS_LOG_FILE: ""
+      GENIEACS_NBI_ACCESS_LOG_FILE: ""
+    ports:
+      - "7547:7547"   # cwmp  (CPE)
+      - "7557:7557"   # nbi   (REST)
+      - "7567:7567"   # fs
+      - "3000:3000"   # ui
+    networks: [acs]
+
+networks:
+  acs:
+    driver: bridge
+
+volumes:
+  mongo-data:
