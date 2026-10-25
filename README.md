@@ -63,7 +63,7 @@
 6. ./unlock.sh selinux                  # NOW set SELinux permissive
 7. adb reboot                           # SELinux permissive takes effect
 8. ./pull_boot.sh                       # extract boot.img for Magisk
-
+# Recommended to patch boot.img on device
 ---
 
 ### Credits:
