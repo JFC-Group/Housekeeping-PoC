@@ -56,10 +56,13 @@
 ### Running:
 1. Start the Docker container by:
 	`cd tls && docker-compose up -d`
-2. Run `stage1.sh`
-3. Follow the instructions
-4. Run `unlock.sh`
-5. Follow the instructions
+2. ./stage1.sh                          # enable ADB
+3. ./unlock.sh                          # unlock bootloader
+4. adb reboot bootloader → fastboot reboot → factory reset (keyboard needed)
+5 ./stage1.sh                          # re-enable ADB after reset
+6. ./unlock.sh selinux                  # NOW set SELinux permissive
+7. adb reboot                           # SELinux permissive takes effect
+8. ./pull_boot.sh                       # extract boot.img for Magisk
 
 ---
 
