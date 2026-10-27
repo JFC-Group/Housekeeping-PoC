@@ -96,16 +96,19 @@ REMOTE_OUT="/data/local/tmp/boot.img"
 echo "[*] dd $BLOCK_DEV -> $REMOTE_OUT ..."
 root_exec "dd if=$BLOCK_DEV of=$REMOTE_OUT bs=4096 2>&1"
 root_exec "chmod 666 $REMOTE_OUT"
+REMOTE_SD="/sdcard/boot_stock.img"
 
 # --- Pull ---
 echo "[*] Pulling boot.img..."
 if adb shell "test -f $REMOTE_OUT && echo exists" 2>/dev/null | grep -q "exists"; then
     adb pull "$REMOTE_OUT" "$OUTPUT"
+    adb push "$OUTPUT" "$REMOTE_SD"
     SIZE=$(stat -c%s "$OUTPUT" 2>/dev/null || stat -f%z "$OUTPUT" 2>/dev/null || echo "?")
     echo "[*] Saved: $OUTPUT ($SIZE bytes)"
     echo ""
     echo "Next: patch with Magisk, then flash:"
-    echo "  1. Transfer $OUTPUT to phone, patch in Magisk app [it is recommended to patch in TV]"
+    echo "  1. Patch /sdcard/boot_stock.img with Magisk on TV"
+    echo "     Patching will not work on external devices due to pre-init dir"
     echo "  2. adb reboot bootloader"
     echo "  3. fastboot reboot fastboot [uboot fastboot -> fastbootd]"
     echo "  4. fastboot flash ${PARTITION} magisk_patched-xxxxx.img"
