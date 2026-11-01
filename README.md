@@ -6,6 +6,7 @@
 
 #### May not work on JHS series
 #### We are not responsible for bricked STBs, getting scammed, thermonuclear warfare caused by using this script, or anything else.
+#### We also do not condone the usage of other third-party repositories/guides that are using this repo; We do not know what they contain.
 ---
 ### Mechanism:
 #### Stage 1 (USB Debugging):
