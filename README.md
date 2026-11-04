@@ -5,6 +5,7 @@
 - JMSC200Av2 on 22.1.09, 24.1.39, and 25.1.9. Should work on older firmwares as well.
 
 #### May not work on JHS series
+#### Boxes other than JMSC200X do NOT have support for USB host in fastbootd.
 #### We are not responsible for bricked STBs, getting scammed, thermonuclear warfare caused by using this script, or anything else.
 #### We also do not condone the usage of other third-party repositories/guides that are using this repo; We do not know what they contain.
 ---
