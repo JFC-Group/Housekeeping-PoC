@@ -1,0 +1,14 @@
+# Partition dumps & raw firmware images (DO NOT COMMIT)
+*.img
+stock_backups/
+
+# Third-party packages
+Magisk-*.apk
+tools/r8.jar
+
+# Temporary test scripts & bins
+test_*.sh
+*.bin
+
+# Build artifacts
+*.class

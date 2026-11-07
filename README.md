@@ -61,11 +61,23 @@
 2. ./stage1.sh                          # enable ADB
 3. ./unlock.sh                          # unlock bootloader
 4. adb reboot bootloader → fastboot reboot → factory reset (keyboard needed)
-5 ./stage1.sh                          # re-enable ADB after reset
+5. ./stage1.sh                          # re-enable ADB after reset
 6. ./unlock.sh selinux                  # NOW set SELinux permissive
 7. adb reboot                           # SELinux permissive takes effect
 8. ./pull_boot.sh                       # extract boot.img for Magisk
 # Recommended to patch boot.img on device
+
+---
+
+### JMSD200A / Firmware 25.1.9+ Automated Flashing & Restore Pipeline:
+On devices where `fastbootd` drops the USB gadget or OEM U-Boot fastboot rejects protocol downloads (`remote: 'unrecognized command'`), and SELinux blocks partition access from Android OS, use the hardware U-Boot storage pipeline:
+
+- `./1_dump_stock.sh`                  # Injects U-Boot commands to dump partitions direct to FAT32 USB
+- `./2_patch_boot.sh`                  # On-device native Magisk v27.0 patcher (auto-detects pre-init 'cache')
+- `./3_flash_magisk.sh`                # Failsafe U-Boot hardware flashing pipeline & root verification
+- `./restore_stock.sh`                 # Interactive 5-option master stock restoration & slot rollback tool
+
+For comprehensive ground-zero instructions, driver setup for Windows & Ubuntu, and troubleshooting, refer to [REDO_AND_RESTORE_COOKBOOK.md](REDO_AND_RESTORE_COOKBOOK.md).
 ---
 
 ### Credits:
